@@ -1,0 +1,1 @@
+Typically /dev/random is blocking (if not enough entropy is available), while /dev/urandom is not.

@@ -1,0 +1,4 @@
+mkdir sws-s1010048
+mkdir sws-s1010048/exercise1 sws-s1010048/exercise2 sws-s1010048/exercise3
+echo Ciske Harsema - s1010048 > names.txt
+stat -c %s sws-s1010048/ > sws-s1010048/exercise1/1b.txt
