@@ -1,2 +1,0 @@
-A false bool is a zero value, while a true is any non-zero value.
-gcc seems to screw up on -O3, and only leave the false branch for some reason. Compiling without optimalizations works fine.

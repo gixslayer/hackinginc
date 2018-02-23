@@ -8,3 +8,6 @@ exercise2: exercise2.c
 
 exercise3: exercise3.c test_exercise3.c
 	gcc -Wall -g -O3 -o exercise3 exercise3.c test_exercise3.c
+
+clean:
+	rm exercise1 exercise2 exercise3
