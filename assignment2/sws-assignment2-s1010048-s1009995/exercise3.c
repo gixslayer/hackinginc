@@ -61,7 +61,7 @@ int memcmp_consttime(const void *s1, const void *s2, size_t n) {
     int diff = 0;
 
     for(size_t i = 0; i < n; ++i, ++p1, ++p2) {
-        if(diff == 0 && *p1 != *p2) {
+        if(*p1 != *p2 && diff == 0) {
             diff = *p1 - *p2;
         }
     }
