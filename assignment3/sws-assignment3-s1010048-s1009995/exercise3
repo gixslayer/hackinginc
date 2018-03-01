@@ -1,0 +1,19 @@
+The first call tries to print a pointer, as the array 'x' is passed, it decays into a pointer to the first element of 'x'. As it is given the first call prints 0x7fffb3cc3b20, we know that is the address of 'x'.
+
+(a)
+This prints the address of 'x', thus 0x7fffb3cc3b20.
+
+(b)
+As the array 'x' decays into a pointer to the first element of 'x', and those elements are of type int32_t, incrementing this pointer yields the address of 'x' + sizeof(int32_t) = 0x7fffb3cc3b20 + 4 = 0x7fffb3cc3b24.
+
+(c)
+As the address of array 'x' is a pointer to an array of 4 elements of type int32_t, incrementing this pointer yields the address of 'x' + 4 * sizeof(int32_t) = 0x7fffb3ccb20 + 16 = 0x7fffb3ccb30.
+
+(d)
+As the array 'x' decays into a pointer to the first element of 'x', and those elements are of type int32_t, dereferencing this int32_t pointer will print the first element of 'x' as a signed integer, thus 23.
+
+(e)
+As we know '*x' yields 23 of type int32_t, and 'x[2]' returns the third element of 'x' as an int32_t, the result of 23 + 5 = 28 is printed.
+
+(f)
+As we know '*x' yields 23 of type int32_t, and 'x+3' yields an int32_t* to the address 0x7fffb3ccb20 + 3 * sizeof(int32_t) = 0x7fffb3ccbc, which is the fourth array element, dereferencing this pointer yields that element. Since this element is (1<<7) = 128, the value 23 + 128 = 151 is printed.

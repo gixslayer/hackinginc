@@ -1,0 +1,5 @@
+The output isn't always the same. As the allocated memory must be contiguous in virtual memory, the largest possible allocation (might) vary based on system load/time.
+
+Fragmentation of the virtual memory could, along with ASLR, also influence the allocation limit.
+
+glibc will allocate large allocations as a private anonymous mapping using the mmap system call, which is not backed by any file, rather than adjust the heap size via sbrk.
