@@ -8,13 +8,15 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#define BUFFER_SIZE 1024*4
+
 int magic_function() {
     // Defined volatile to stop them from being optimized out.
     volatile uint64_t a = 0x0011223344556677;
     volatile uint64_t b = 0x8899aabbccddeeff;
     volatile uint64_t c = 0;
     volatile uint64_t d = 0;
-    volatile char buffer[4096] = {0};
+    volatile char buffer[BUFFER_SIZE] = {0};
 
     return a + b + c + d;
 }
@@ -77,7 +79,8 @@ int main(int argc, char** argv) {
     uint64_t* sp = (uint64_t*)(rsp - 8);
 
     // Get stack base address, and compute how much memory is below us.
-    uint64_t diff = rsp - get_stack_base();
+    uint64_t pre_stack_base = get_stack_base();
+    uint64_t diff = rsp - pre_stack_base;
     uint64_t copy_size = argc >= 2 ? atoi(argv[1]) : diff / 8;
 
     // Validate user size is within the stack.
@@ -103,6 +106,10 @@ int main(int argc, char** argv) {
         mem_after[i] = *(sp - i);
     }
 
+    // Grab stack base after call to determine if it grew.
+    uint64_t post_stack_base = get_stack_base();
+
+    // Compare stack memory and print it in a nice table.
     printf("offset | address        | before             | after              | changed\n");
     printf("-------|----------------|--------------------|--------------------|--------\n");
 
@@ -121,11 +128,22 @@ int main(int argc, char** argv) {
     free(mem_before);
     free(mem_after);
 
-    printf("\nrbp:        0x%016lx\n", rbp);
-    printf("rsp:        0x%016lx\n", rsp);
-    printf("stack base: 0x%016lx\n", get_stack_base());
-    printf("difference: 0x%lx\n", diff);
-    printf("estimated stack frame size: %d bytes\n", last_change * 8);
+    printf("\nrbp: 0x%016lx\n", rbp);
+    printf("rsp: 0x%016lx\n", rsp);
+    printf("stack base before call: 0x%016lx\n", pre_stack_base);
+    printf("stack base after call:  0x%016lx\n", post_stack_base);
+
+    uint64_t estimated_size;
+
+    if(pre_stack_base != post_stack_base) {
+        printf("stack base changed, assuming it grew to fit data\n");
+        estimated_size = rsp - post_stack_base;
+    } else {
+        printf("no change in stack base, using last changed qword to determine size\n");
+        estimated_size = last_change * 8;
+    }
+
+    printf("estimated stack frame size: %lu bytes\n", estimated_size);
 
     return EXIT_SUCCESS;
 }
