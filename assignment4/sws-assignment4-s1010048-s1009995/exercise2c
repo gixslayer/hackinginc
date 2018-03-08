@@ -1,0 +1,1 @@
+As the 7 character string must be followed by a null terminator, 7 + 1 = 8 chars are needed.

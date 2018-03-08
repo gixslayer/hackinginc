@@ -1,0 +1,1 @@
+The free() implementation will crash the program with an invalid next size, as we overwrote heap metadata with spaces, thus causing free() to operate on invalid data.

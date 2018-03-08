@@ -1,0 +1,25 @@
+digraph code {
+	graph [bgcolor=azure fontsize=8 fontname="Courier" splines="ortho"];
+	node [fillcolor=gray style=filled shape=box];
+	edge [arrowhead="normal"];
+	"0x00400aff" -> "0x00400b25" [color="#00007f"];
+ "0x00400aff" [fillcolor="lightgray", label="  ;-- main:\l/ (fcn) main 171\l|   main (int arg_13h);\l| ; var int local_20h @ rbp-0x20\l| ; var int local_8h @ rbp-0x8\l| ; var int local_4h @ rbp-0x4\l| ; var int local_0h @ rbp-0x0\l| ; arg int arg_13h @ rbp+0x13\l| 0x00400aff      push rbp\l| 0x00400b00      mov rbp, rsp\l| 0x00400b03      sub rsp, 0x20\l| 0x00400b07      mov dword [local_4h], 0\l| 0x00400b0e      mov dword [local_8h], 0\l| 0x00400b15      jmp 0x400b25\l", URL="main/0x00400aff"]
+	"0x00400b17" -> "0x00400b25" [color="#00007f"];
+ "0x00400b17" [fillcolor="lightgray", label="| 0x00400b17      mov eax, dword [local_8h]\l| 0x00400b1a      cdqe\l| 0x00400b1c      mov byte [rbp + rax - 0x20], 0\l| 0x00400b21      add dword [local_8h], 1\l", URL="main/0x00400b17"]
+	"0x00400b25" -> "0x00400b17" [color="#007f00"];
+	"0x00400b25" -> "0x00400b2b" [color="#7f0000"];
+ "0x00400b25" [fillcolor="lightgray", label="| 0x00400b25      cmp dword [local_8h], 0x13\l| 0x00400b29      jle 0x400b17\l", URL="main/0x00400b25"]
+	"0x00400b2b" -> "0x00400b83" [color="#007f00"];
+	"0x00400b2b" -> "0x00400b7c" [color="#7f0000"];
+ "0x00400b2b" [fillcolor="lightgray", label="| 0x00400b2b      lea rdi, str.Please_enter_your_password:\l| 0x00400b32      mov eax, 0\l| 0x00400b37      call sym.__printf\l| 0x00400b3c      lea rax, [local_20h]\l| 0x00400b40      mov rdi, rax\l| 0x00400b43      mov eax, 0\l| 0x00400b48      call sym.gets\l| 0x00400b4d      lea rax, [local_20h]\l| 0x00400b51      mov edx, 0x14\l| 0x00400b56      mov rsi, rax\l| 0x00400b59      lea rdi, obj.hash\l| 0x00400b60      call sym.sha256\l| 0x00400b65      lea rsi, obj.okhash\l| 0x00400b6c      lea rdi, obj.hash\l| 0x00400b73      call sym.hash_equals\l| 0x00400b78      test eax, eax\l| 0x00400b7a      je 0x400b83\l", URL="main/0x00400b2b"]
+	"0x00400b7c" -> "0x00400b83" [color="#00007f"];
+ "0x00400b7c" [fillcolor="lightgray", label="| 0x00400b7c      mov dword [local_4h], 1\l", URL="main/0x00400b7c"]
+	"0x00400b83" -> "0x00400b97" [color="#007f00"];
+	"0x00400b83" -> "0x00400b89" [color="#7f0000"];
+ "0x00400b83" [fillcolor="lightgray", label="| 0x00400b83      cmp dword [local_4h], 0\l| 0x00400b87      je 0x400b97\l", URL="main/0x00400b83"]
+	"0x00400b89" -> "0x00400ba3" [color="#00007f"];
+ "0x00400b89" [fillcolor="lightgray", label="| 0x00400b89      lea rdi, str.You_re_root\l| 0x00400b90      call sym.puts\l| 0x00400b95      jmp 0x400ba3\l", URL="main/0x00400b89"]
+	"0x00400b97" -> "0x00400ba3" [color="#00007f"];
+ "0x00400b97" [fillcolor="lightgray", label="| 0x00400b97      lea rdi, str.Wrong_password\l| 0x00400b9e      call sym.puts\l", URL="main/0x00400b97"]
+ "0x00400ba3" [fillcolor="lightgray", label="| 0x00400ba3      mov eax, 0\l| 0x00400ba8      leave\l\\ 0x00400ba9      ret\l", URL="main/0x00400ba3"]
+}

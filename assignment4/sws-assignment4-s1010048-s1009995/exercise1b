@@ -1,0 +1,6 @@
+echo `python -c "print 'A' * 29"` | ./pwd-hard
+
+The goal is to overflow the buffer puts writes into, such that a non-zero value is written into the 'equal' variable that follows it.
+This works because the variable is set to 1 if the hashes are equal, but is not changed when they are not equal.
+This buffer starts at rbp-0x20, and this variable at rbp-0x4.
+This means we need to write 0x20-0x4 = 0x1c (28) characters to reach the start of this variable, and then write any non-zero character.

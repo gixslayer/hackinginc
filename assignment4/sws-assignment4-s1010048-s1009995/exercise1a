@@ -1,0 +1,5 @@
+The program prompts for a password, which is read into a buffer of 20 characters using puts.
+Then the sha256 hash of that input is calculated (only the first 20 characters of the buffer are taken).
+This hash is then compared to a stored hash of the correct password.
+If this comparison holds, a local variable that was initialized to 0 is set to 1.
+The program then prints either "You're root!" or "Wrong password", based on the value of that local variable (non-zero is root, zero is wrong).

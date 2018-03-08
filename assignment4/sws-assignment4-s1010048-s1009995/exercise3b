@@ -1,0 +1,1 @@
+The matrices m and mt are arrays of arrays, but only the top array is freed (not the sub arrays). The result is that per loop iteration about 15MB of memory is leaked. Eventually the allocations will fail as a result, causing the program with a return value of -1.
