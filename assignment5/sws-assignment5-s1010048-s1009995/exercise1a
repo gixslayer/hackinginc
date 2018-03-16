@@ -1,0 +1,78 @@
+command: break *function_b+15
+command: run
+
+[function_b]
+
+command: info frame
+Stack level 0, frame at 0x7fffffffdda0:
+ rip = 0x400575 in function_b (exercise1b.c:8); saved rip = 0x4005c1
+ called by frame at 0x7fffffffddc0
+ source language c.
+ Arglist at 0x7fffffffdd90, args: 
+ Locals at 0x7fffffffdd90, Previous frame's sp is 0x7fffffffdda0
+ Saved registers:
+  rbp at 0x7fffffffdd90, rip at 0x7fffffffdd98
+
+command: i r rbp
+rbp            0x7fffffffdd90	0x7fffffffdd90
+
+command: x/xg $rbp
+0x7fffffffdd90:	0x00007fffffffddb0
+
+command: i r rsp
+rsp            0x7fffffffdd80	0x7fffffffdd80
+
+command: print/x &beacon
+No symbol "beacon" in the current context.
+
+
+
+location of the frame:      0x7fffffffdda0
+location of caller frame:   0x7fffffffddc0
+rip:                        0x400575
+saved rip:                  0x4005c1
+rbp:                        0x7fffffffdd90
+rbp saved at:               0x7fffffffdd90
+saved base pointer:         0x7fffffffddb0
+rsp:                        0x7fffffffdd80
+address of local variable:  'No symbol "beacon" in current context.'
+
+
+
+[function_a]
+
+command: up
+command: info frame
+Stack level 1, frame at 0x7fffffffddc0:
+ rip = 0x4005c1 in function_a (exercise1b.c:14); saved rip = 0x4005eb
+ called by frame at 0x7fffffffddd0, caller of frame at 0x7fffffffdda0
+ source language c.
+ Arglist at 0x7fffffffddb0, args: 
+ Locals at 0x7fffffffddb0, Previous frame's sp is 0x7fffffffddc0
+ Saved registers:
+  rbp at 0x7fffffffddb0, rip at 0x7fffffffddb8
+
+command: i r rbp
+rbp            0x7fffffffddb0	0x7fffffffddb0
+
+command x/xg $rbp
+0x7fffffffddb0:	0x00007fffffffddc0
+
+command: i r rsp
+rsp            0x7fffffffdda0	0x7fffffffdda0
+
+command: print/x &beacon
+$1 = 0x7fffffffddac
+
+
+
+
+location of the frame:      0x7fffffffddc0
+location of caller frame:   0x7fffffffddb0
+rip:                        0x5005c1
+saved rip:                  0x4005eb
+rbp:                        0x7fffffffddb0
+rbp saved at:               0x7fffffffddb0
+saved base pointer:         0x7fffffffdda0
+rsp:                        0x7fffffffdda0
+address of local variable:  0x7fffffffddac

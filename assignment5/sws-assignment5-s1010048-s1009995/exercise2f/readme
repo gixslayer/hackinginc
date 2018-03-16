@@ -1,0 +1,2 @@
+1. Generate exploit with 'python exploit.py > exploit'
+2. Run './exercise2e.sh | nc hackme.cs.ru.nl 2266' and execute commands (eg ls or proof)
